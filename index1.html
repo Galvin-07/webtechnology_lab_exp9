@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="resumeApp">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>B.Galvin Chris | Online Resume</title>
+
+<!-- AngularJS Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+<style>
+
+/* GENERAL STYLING */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fc;
+    color: #26334a;
+    line-height: 1.6;
+}
+
+/* NAVIGATION */
+
+nav {
+    background: #101d35;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav h2 {
+    color: #38bdf8;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+/* HERO SECTION */
+
+.hero {
+    min-height: 380px;
+    background: linear-gradient(135deg, #101d35, #174a75);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.profile {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: #38bdf8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+    margin-bottom: 20px;
+    border: 4px solid white;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+/* SECTIONS */
+
+section {
+    padding: 50px 10%;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 28px;
+    color: #174a75;
+    margin-bottom: 30px;
+}
+
+/* CARDS */
+
+.card {
+    background: white;
+    padding: 25px;
+    margin: 15px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+.card h3 {
+    color: #174a75;
+    margin-bottom: 10px;
+}
+
+/* SKILLS */
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.skill {
+    background: #dbeafe;
+    color: #174a75;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* BUTTONS */
+
+.btn {
+    background: #38bdf8;
+    color: #101d35;
+    padding: 12px 22px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    background: #7dd3fc;
+}
+
+.btn:disabled {
+    background: #b8c4d1;
+    cursor: not-allowed;
+}
+
+/* FORM */
+
+.form-container {
+    max-width: 650px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #174a75;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border: 2px solid #38bdf8;
+}
+
+.radio-group label {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.radio-group input {
+    width: auto;
+}
+
+.error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.success {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #101d35;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 750px) {
+
+    nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    section {
+        padding: 35px 5%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body ng-controller="MainController">
+
+<!-- NAVIGATION BAR -->
+
+<nav>
+
+    <h2>My Resume</h2>
+
+    <ul>
+        <li><a href="#!/">Home</a></li>
+        <li><a href="#!/about">About</a></li>
+        <li><a href="#!/education">Education</a></li>
+        <li><a href="#!/projects">Projects</a></li>
+        <li><a href="#!/contact">Contact</a></li>
+    </ul>
+
+</nav>
+
+
+<!-- ANGULARJS ROUTING AREA -->
+
+<div ng-view></div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>© 2026 B.Galvin Chris | Online Resume/CV</p>
+
+    <p>Created using HTML, CSS and AngularJS</p>
+
+</footer>
+
+
+<!-- HOME PAGE TEMPLATE -->
+
+<script type="text/ng-template" id="home.html">
+
+<div class="hero">
+
+    <div class="profile">👨‍🎓</div>
+
+    <h1>{{student.name}}</h1>
+
+    <p>{{student.role}}</p>
+
+    <p>{{student.university}}</p>
+
+    <a href="#!/about" class="btn">
+        Explore My Resume
+    </a>
+
+</div>
+
+<section>
+
+    <h2 class="section-title">Welcome to My Online Resume</h2>
+
+    <div class="card">
+
+        <h3>Professional Introduction</h3>
+
+        <p>
+        Welcome to my personal resume website.
+        I am B.Galvin Chris, a student at Karunya University.
+        This website provides information about my education,
+        technical skills, academic projects and contact details.
+        </p>
+
+    </div>
+
+</section>
+
+</script>
+
+
+<!-- ABOUT PAGE TEMPLATE -->
+
+<script type="text/ng-template" id="about.html">
+
+<section>
+
+    <h2 class="section-title">About Me</h2>
+
+    <div class="card">
+
+        <h3>Personal Profile</h3>
+
+        <p>{{student.about}}</p>
+
+        <br>
+
+        <p><b>Name:</b> {{student.name}}</p>
+
+        <p><b>University:</b> {{student.university}}</p>
+
+        <p><b>Department:</b> {{student.department}}</p>
+
+        <p><b>Specialization:</b> {{student.specialization}}</p>
+
+        <p><b>Email:</b> {{student.email}}</p>
+
+        <p><b>Location:</b> {{student.location}}</p>
+
+        <p><b>Career Goal:</b> {{student.goal}}</p>
+
+    </div>
+
+    <h2 class="section-title">Technical Skills</h2>
+
+    <div class="skills">
+
+        <span class="skill" ng-repeat="skill in skills">
+            {{skill}}
+        </span>
+
+    </div>
+
+</section>
+
+</script>
+
+
+<!-- EDUCATION PAGE TEMPLATE -->
+
+<script type="text/ng-template" id="education.html">
+
+<section>
+
+    <h2 class="section-title">Education</h2>
+
+    <div class="card" ng-repeat="edu in education">
+
+        <h3>{{edu.degree}}</h3>
+
+        <p><b>University:</b> {{edu.college}}</p>
+
+        <p><b>Department:</b> {{edu.department}}</p>
+
+        <p><b>Duration:</b> {{edu.year}}</p>
+
+    </div>
+
+</section>
+
+</script>
+
+
+<!-- PROJECTS PAGE TEMPLATE -->
+
+<script type="text/ng-template" id="projects.html">
+
+<section>
+
+    <h2 class="section-title">My Projects</h2>
+
+    <div class="card" ng-repeat="project in projects">
+
+        <h3>{{$index + 1}}. {{project.title}}</h3>
+
+        <p>{{project.description}}</p>
+
+    </div>
+
+</section>
+
+</script>
+
+
+<!-- CONTACT AND REGISTRATION FORM TEMPLATE -->
+
+<script type="text/ng-template" id="contact.html">
+
+<section>
+
+    <h2 class="section-title">Contact & Registration Form</h2>
+
+    <div class="form-container">
+
+        <h3 style="color:#174a75; margin-bottom:20px;">
+            User Registration Form
+        </h3>
+
+        <form name="userForm"
+              ng-submit="submitForm(userForm)"
+              novalidate>
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label>Name *</label>
+
+                <input type="text"
+                       name="name"
+                       ng-model="user.name"
+                       ng-pattern="/^[A-Za-z ]+$/"
+                       placeholder="Enter your name"
+                       required>
+
+                <div class="error"
+                     ng-show="userForm.name.$touched && userForm.name.$error.required">
+                    Name is required.
+                </div>
+
+                <div class="error"
+                     ng-show="userForm.name.$touched && userForm.name.$error.pattern">
+                    Name should not contain numbers or special characters.
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label>Password *</label>
+
+                <input type="password"
+                       name="password"
+                       ng-model="user.password"
+                       ng-pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$/"
+                       placeholder="Enter your password"
+                       required>
+
+                <div class="error"
+                     ng-show="userForm.password.$touched && userForm.password.$error.required">
+                    Password is required.
+                </div>
+
+                <div class="error"
+                     ng-show="userForm.password.$touched && userForm.password.$error.pattern">
+                    Password must contain uppercase, lowercase, number
+                    and at least 8 characters.
+                </div>
+
+            </div>
+
+
+            <!-- AGE -->
+
+            <div class="form-group">
+
+                <label>Age *</label>
+
+                <input type="number"
+                       name="age"
+                       ng-model="user.age"
+                       min="18"
+                       max="30"
+                       placeholder="Enter your age"
+                       required>
+
+                <div class="error"
+                     ng-show="userForm.age.$touched && userForm.age.$error.required">
+                    Age is required.
+                </div>
+
+                <div class="error"
+                     ng-show="userForm.age.$touched &&
+                     (userForm.age.$error.min || userForm.age.$error.max)">
+                    Age must be between 18 and 30.
+                </div>
+
+            </div>
+
+
+            <!-- MOBILE NUMBER -->
+
+            <div class="form-group">
+
+                <label>Mobile Number *</label>
+
+                <input type="tel"
+                       name="mobile"
+                       ng-model="user.mobile"
+                       ng-pattern="/^[0-9]{10}$/"
+                       placeholder="Enter 10 digit mobile number"
+                       required>
+
+                <div class="error"
+                     ng-show="userForm.mobile.$touched && userForm.mobile.$error.required">
+                    Mobile number is required.
+                </div>
+
+                <div class="error"
+                     ng-show="userForm.mobile.$touched && userForm.mobile.$error.pattern">
+                    Enter a valid 10-digit mobile number.
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label>Email *</label>
+
+                <input type="email"
+                       name="email"
+                       ng-model="user.email"
+                       placeholder="Enter your email"
+                       required>
+
+                <div class="error"
+                     ng-show="userForm.email.$touched && userForm.email.$error.required">
+                    Email is required.
+                </div>
+
+                <div class="error"
+                     ng-show="userForm.email.$touched && userForm.email.$error.email">
+                    Enter a valid email address.
+                </div>
+
+            </div>
+
+
+            <!-- GENDER -->
+
+            <div class="form-group">
+
+                <label>Gender *</label>
+
+                <div class="radio-group">
+
+                    <label>
+                        <input type="radio"
+                               name="gender"
+                               ng-model="user.gender"
+                               value="Male"
+                               required>
+                        Male
+                    </label>
+
+                    <label>
+                        <input type="radio"
+                               name="gender"
+                               ng-model="user.gender"
+                               value="Female"
+                               required>
+                        Female
+                    </label>
+
+                </div>
+
+                <div class="error"
+                     ng-show="userForm.gender.$touched && userForm.gender.$error.required">
+                    Please select your gender.
+                </div>
+
+            </div>
+
+
+            <!-- STATE -->
+
+            <div class="form-group">
+
+                <label>State *</label>
+
+                <select name="state"
+                        ng-model="user.state"
+                        required>
+
+                    <option value="">Select State</option>
+
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+
+                    <option value="Kerala">Kerala</option>
+
+                    <option value="Karnataka">Karnataka</option>
+
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+
+                    <option value="Telangana">Telangana</option>
+
+                    <option value="Other">Other</option>
+
+                </select>
+
+                <div class="error"
+                     ng-show="userForm.state.$touched && userForm.state.$error.required">
+                    Please select your state.
+                </div>
+
+            </div>
+
+
+            <!-- SUBMIT BUTTON -->
+
+            <button type="submit"
+                    class="btn"
+                    ng-disabled="userForm.$invalid">
+
+                Submit
+
+            </button>
+
+            <button type="button"
+                    class="btn"
+                    ng-click="resetForm(userForm)">
+
+                Reset
+
+            </button>
+
+        </form>
+
+
+        <!-- SUCCESS MESSAGE -->
+
+        <div class="success" ng-show="submitted">
+
+            <h3>Registration Successful!</h3>
+
+            <p>Thank you, {{user.name}}.</p>
+
+            <p>Your details have been submitted successfully.</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</script>
+
+
+<!-- ANGULARJS APPLICATION -->
+
+<script>
+
+var app = angular.module("resumeApp", ["ngRoute"]);
+
+
+// ========================================
+// 1. ANGULARJS ROUTING
+// ========================================
+
+app.config(function($routeProvider) {
+
+    $routeProvider
+
+    .when("/", {
+
+        templateUrl: "home.html"
+
+    })
+
+    .when("/about", {
+
+        templateUrl: "about.html"
+
+    })
+
+    .when("/education", {
+
+        templateUrl: "education.html"
+
+    })
+
+    .when("/projects", {
+
+        templateUrl: "projects.html"
+
+    })
+
+    .when("/contact", {
+
+        templateUrl: "contact.html"
+
+    })
+
+    .otherwise({
+
+        redirectTo: "/"
+
+    });
+
+});
+
+
+// ========================================
+// 2. MAIN CONTROLLER
+// ========================================
+
+app.controller("MainController", function($scope) {
+
+
+    // STUDENT DETAILS
+
+    $scope.student = {
+
+        name: "B.Galvin Chris",
+
+        role: "Student | Developer | Technology Enthusiast",
+
+        university: "Karunya University",
+
+        department: "Biomedical Engineering",
+
+        specialization: "Artificial Intelligence and Machine Learning",
+
+        email: "bathulagalvin@karunya.edu.in",
+
+        location: "India",
+
+        about: "Hello! I am B.Galvin Chris, a student at Karunya University. I am interested in programming, technology and software development. I enjoy creating applications, solving problems and learning new technologies.",
+
+        goal: "To become a skilled professional and develop innovative technological solutions."
+
+    };
+
+
+    // EDUCATION DETAILS
+
+    $scope.education = [
+
+        {
+
+            degree: "Bachelor's Degree",
+
+            college: "Karunya University",
+
+            department: "Biomedical Engineering",
+
+            year: "2024 - 2028"
+
+        }
+
+    ];
+
+
+    // TECHNICAL SKILLS
+
+    $scope.skills = [
+
+        "HTML",
+
+        "CSS",
+
+        "JavaScript",
+
+        "AngularJS",
+
+        "Python",
+
+        "C Programming",
+
+        "Machine Learning",
+
+        "Problem Solving"
+
+    ];
+
+
+    // PROJECT DETAILS
+
+    $scope.projects = [
+
+        {
+
+            title: "Number Guessing Game",
+
+            description: "An interactive game where users guess a randomly generated number. It improves logical thinking and programming skills."
+
+        },
+
+        {
+
+            title: "Simple Quiz Application",
+
+            description: "A quiz application that allows users to answer questions and test their knowledge through an interactive interface."
+
+        },
+
+        {
+
+            title: "Basic Banking System",
+
+            description: "A basic banking application demonstrating account management and simple banking operations such as deposits and withdrawals."
+
+        },
+
+        {
+
+            title: "Password Generator",
+
+            description: "A password generation application that creates random passwords to improve password security."
+
+        }
+
+    ];
+
+
+    // REGISTRATION FORM MODEL
+
+    $scope.user = {};
+
+    $scope.submitted = false;
+
+
+    // FORM SUBMISSION
+
+    $scope.submitForm = function(form) {
+
+        if (form.$valid) {
+
+            $scope.submitted = true;
+
+        }
+
+    };
+
+
+    // RESET FORM
+
+    $scope.resetForm = function(form) {
+
+        $scope.user = {};
+
+        $scope.submitted = false;
+
+        form.$setPristine();
+
+        form.$setUntouched();
+
+    };
+
+});
+
+</script>
+
+</body>
+</html>
